@@ -1,0 +1,32 @@
+## Architecture
+
+- Refactor to event driven architecture
+- UoW, Repository Pattern, PostgreSQL
+- Unit, E2E tests
+- Implement Kafka Server
+- Implement Kafka Publisher, Listener
+- BDD, Virtual Publisher
+- API (GraphQL, RPC or REST?)
+
+
+## DevOps
+
+- Docker Compose
+- CirclCI tests
+
+
+## Algorithms
+
+- Find outliers in a given buffer - (publish to messagebus (Kafka)) # Ben
+
+
+## Frontend
+
+- Decide on Frontend Framework (React & Typescript?)
+- Dashboard  (Must be able to show clean & dirty data)
+
+
+# Data source
+
+- Decide where to get the real data from
+- Inject real data into the system

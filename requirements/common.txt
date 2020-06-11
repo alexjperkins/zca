@@ -1,0 +1,5 @@
+Flask==1.1.*
+Flask-Migrate==2.5.*
+gunicorn==20.0.*
+psycopg2==2.8.*
+SQLAlchemy==1.3.*

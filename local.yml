@@ -1,0 +1,38 @@
+version: '3'
+
+volumes:
+  local_zca_postgres_data: {}
+  local_zca_postgres_data_backups: {}
+
+
+services:
+
+  # Datastore
+  postgres:
+    env_file:
+      - ./.envs/.local/.postgres
+    build:
+      context: . 
+      dockerfile: ./compose/production/postgres/Dockerfile
+    image: zca_local_postgres
+    volumes:
+      - local_zca_postgres_data:/var/lib/postgresql/data
+      - local_zca_postgres_data:/backups
+
+  # ZCA Service
+  zca:
+    env_file:
+      - ./.envs/.local/.postgres
+      - ./.envs/.local/.zca
+    build:
+      context: .
+      dockerfile: ./compose/local/zca/Dockerfile
+    image: zca_local_zca
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./zca:/zca
+      - ./tests:/tests
+    depends_on:
+      - postgres
+    command: /start

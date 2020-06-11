@@ -1,2 +1,14 @@
+
+
+
+### --- General --- ###
 *__pycache__*
 venv
+
+
+### --- Envs --- ###
+.env
+.env*
+*.env*
+.envs*
+!.envs/.local/*

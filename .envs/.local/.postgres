@@ -1,0 +1,5 @@
+POSTGRES_DB=zca
+POSTGRES_USER=postgres-user
+POSTGRES_PASSWORD=postgres-password
+POSTGRES_HOST=postgres
+POSTGRES_PORT=5432
