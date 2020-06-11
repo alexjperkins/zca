@@ -63,8 +63,37 @@ Squash merges ONLY
 	sudo apt-get install docker docker-compose
 ```
 
+## Running
+```
+	$ make build-and-run-local	
+```
 
 ## Tests
 ```
 	$ make test
+```
+
+## Test Debugger
+
+Inject breakpoint into code first.
+
+```
+	# eg
+	import ipdb; ipdb.set_trace()
+```
+
+```
+	$ make debug-tests
+```
+
+This is since pytest doesn't capture stdout by default
+
+## Lint
+```
+	$ make lint
+```
+
+## Format
+```
+	$ make format
 ```
