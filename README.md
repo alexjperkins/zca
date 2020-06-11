@@ -58,9 +58,38 @@ Squash merges ONLY
 
 
 ## Setup
+
+Requirements:
+
+python3.8
+pip
+docker
+docker-compose
+
 ```
 	# Debian based (incl Ubuntu)
-	sudo apt-get install docker docker-compose
+
+	# Upgrade apt
+	$ sudo apt-get update -y && sudo apt-get upgrade -y
+
+	# Check python version
+	$ echo $(python --version)  ##  should return 'Python 3.8.*'
+
+	# Install Python3.8 (only run if above not true)
+	$ sudo apt-get install python3.8 && echo "alias='python=python3.8' >>  ~/.bashrc" 
+	$ sudo apt-get install python3-pip
+
+	# Docker
+	$ sudo apt-get install docker-ce docker-ce-cli containerd.io
+
+	# Docker compose
+	$ sudo curl -L  https://github.com/docker/compose/releases/download/1.21.2/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
+	$ sudo chmod +x /usr/local/bin/docker-compose
+	$ docker-compose --version
+
+
+	# python virtual environment
+	$ python -m venv venv && . ./venv/bin/activate && ./venv/bin/pip install -r requirements/development.txt
 ```
 
 ## Running

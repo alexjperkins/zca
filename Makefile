@@ -1,9 +1,9 @@
 ### --- Linting --- ###
 lint-zca:
-	black ./zca --diff
+	. ./venv/bin/activate && black ./zca --diff
 
 format-zca:
-	black ./zca
+	. ./venv/bin/activate && black ./zca
 
 
 ### --- Testing --- ###
@@ -19,7 +19,7 @@ coverage:
 
 ### --- ZCA --- ###
 build-local:
-	docker-compsoe -f local build 
+	docker-compose -f local build 
 
 run-local:
 	docker-compose -f local.yml up
