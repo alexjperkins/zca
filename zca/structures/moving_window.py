@@ -1,33 +1,39 @@
+import collections
+from typing import Optional
 import statistics
 
+from ..domain.models import TransactionalRecord
 from .exceptions import (
     MovingWindowFullError,
     MovingWindowInitializationError
 )
 
 
-class MovingWindow:
+class TransactionalMovingWindow:
     def __init__(self, max_size):
         self._max_size = max_size
-        self._queue = []
+        self._queue = collections.deque(maxlen=self._max_size)
 
     def __len__(self):
         return len(self._queue)
 
-    def _enqueue(self, value: float) -> int:
+    def _enqueue(
+        self, *, value: TransactionalRecord
+    ) -> Optional[TransactionalRecord]:
+
         if len(self) >= self._max_size:
             raise MovingWindowFullError
 
-        self._queue.insert(0, value)
+        self._queue.appendleft(value)
         return len(self)
 
     def _dequeue(self):
         if self._queue:
             return self._queue.pop()
 
-        return len(self)
+        return None
 
-    def shift(self, new_value: float):
+    def shift_right(self, new_value: float):
         self._dequeue()
         self._enqueue(value=new_value)
         return new_value
@@ -35,19 +41,12 @@ class MovingWindow:
     def peak(self):
         return self._queue[-1]
 
-    def init(self, values):
-        if len(values) <= self._max_size:
-            for value in reversed(values):
-                self._enqueue(value)
-
-            return len(self)
-
-        raise MovingWindowInitializationError(
-            'Number of values exceed the window max size'
-        )
-
     def stdev(self):
         return statistics.stdev(self._queue)
 
     def mean(self):
         return statistics.mean(self._queue)
+
+    @property
+    def max_size(self):
+        return self._max_size

@@ -9,9 +9,14 @@
 - API (GraphQL, RPC or REST?)
 
 
+## Features
+
+- Buy / Signalling
+
+
 ## DevOps
 
-- Docker Compose
+- DockerCompose
 - CirclCI tests
 
 

@@ -25,6 +25,10 @@ RUN sed -i 's/\r$//g' /start
 RUN chmod +x /start
 
 
-### --- Entrypoint --- ###
+### --- Path Setup --- ###
 WORKDIR /zca
+ENV PYTHONPATH=/:/zca:/tests
+
+
+### --- Entrypoint --- ###
 ENTRYPOINT ["/entrypoint"]

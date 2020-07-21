@@ -9,9 +9,9 @@ import pytest
 
 from pathlib import Path
 
-from sigalgo.parsers.csv import CSVParser
-from sigalgo.records import Record
-from sigalgo.records.streams import RecordStream
+from parsers.csv import CSVParser
+from records import Record
+from records.streams import RecordStream
 
 
 @pytest.fixture

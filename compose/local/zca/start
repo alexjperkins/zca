@@ -5,4 +5,4 @@ set -o errexit
 set -o pipefail
 set -o nounset
 
-/bin/bash -c "cd / && gunicorn 'zca.app:create_app()' --bin 0.0.0.0:5000 --workers 1 --reload"
+/bin/bash -c "cd / && gunicorn 'zca.app.entrypoints:create_app()' --bin 0.0.0.0:5000 --workers 1 --reload"

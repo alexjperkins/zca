@@ -1,13 +1,59 @@
 version: '3'
 
 volumes:
+  local_zca_zookeeper_data: {}
+  local_zca_zookeeper_datalog: {}
+  local_zca_kafka1_data: {}
+  local_zca_kafka2_data: {}
   local_zca_postgres_data: {}
   local_zca_postgres_data_backups: {}
 
 
 services:
+  ### --- Zookeeper --- ###
+  zookeeper:
+    build:
+      context: .
+      dockerfile: ./compose/production/zookeeper/Dockerfile
+    image: zca_local_zookeeper
+    ports:
+      - "2181:2181"
+    volumes:
+      - local_zca_zookeeper_data:/data
+      - local_zca_zookeeper_datalog:/datalog
 
-  # Datastore
+  ### --- Kafka --- ###
+  kafka1:
+    env_file:
+      - ./.envs/.local/.kafka1
+    build:
+      context: .
+      dockerfile: ./compose/production/kafka/Dockerfile
+    image: zca_kafka
+    hostname: zcakafka1
+    ports:
+      - "9092:9092"
+    volumes:
+      - local_zca_kafka1_data:/var/lib/kafka/data
+    depends_on:
+      - zookeeper
+
+  kafka2:
+    env_file:
+      - ./.envs/.local/.kafka2
+    build:
+      context: .
+      dockerfile: ./compose/production/kafka/Dockerfile
+    image: zca_kafka
+    hostname: zcakafka2
+    ports:
+      - "9093:9093"
+    volumes:
+      - local_zca_kafka2_data:/var/lib/kafka/data
+    depends_on:
+      - zookeeper
+      
+  ### --- Persistant Datastore --- ###
   postgres:
     env_file:
       - ./.envs/.local/.postgres
@@ -19,7 +65,7 @@ services:
       - local_zca_postgres_data:/var/lib/postgresql/data
       - local_zca_postgres_data:/backups
 
-  # ZCA Service
+  ### --- ZCA Service --- ###
   zca:
     env_file:
       - ./.envs/.local/.postgres
@@ -35,4 +81,6 @@ services:
       - ./tests:/tests
     depends_on:
       - postgres
+      - kafka1
+      - kafka2
     command: /start

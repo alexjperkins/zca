@@ -18,8 +18,12 @@ coverage:
 
 
 ### --- ZCA --- ###
+run-zk:
+	docker-compose -f local.yml up zookeeper 
+
+
 build-local:
-	docker-compose -f local build 
+	docker-compose -f local.yml build 
 
 run-local:
 	docker-compose -f local.yml up
